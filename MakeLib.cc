@@ -1718,8 +1718,10 @@ if (file) {
    while (f) {
       strcpy(name2, f->fName);
       i = 0;
-      while (name2[i])
-         name2[i] = toupper(name2[i++]);
+      while (name2[i]) {
+         name2[i] = toupper(name2[i]);
+         ++i;
+      }
       if (! strcmp(name2, name))
          return f->fFile;
       f = f->fNext;
