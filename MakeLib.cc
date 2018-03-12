@@ -1552,14 +1552,7 @@ if (inFile = fopen(*libName, "rb")) {	/* open the library */
       ReadName(name, s[13]);
       if (LibNum(name) == dfile) {	/*   if its in the dfile, delete it */
 	 if (objFile) {
-	    i = (len+511)/512;
-	    if (s[32]) {
-	       s[0] = i>>24; s[1] = i>>16; s[2] = i>>8; s[3] = i;
-               }
-	    else {
-	       s[3] = i>>24; s[2] = i>>16; s[1] = i>>8; s[0] = i;
-               }
-	    fwrite(s, 1, i*512, objFile);
+	    fwrite(s, 1, len, objFile);
 	    }
 	 if (symbol) {			/*     adjust disps for library files */
             p = symbol;
