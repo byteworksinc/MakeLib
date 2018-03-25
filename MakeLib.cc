@@ -489,10 +489,14 @@ int Read2 (void)
 int num;
 
 num = 0;
-if (s[32])
-   num = (s[ds++]<<8)+s[ds++];
-else
-   num = s[ds++]+(s[ds++]<<8);
+if (s[32]) {
+   num = s[ds++]<<8;
+   num |= s[ds++];
+   }
+else {
+   num = s[ds++];
+   num |= s[ds++]<<8;
+   }
 return num;
 }
 
@@ -518,12 +522,18 @@ long Read4 (void)
 long num;
 
 num = 0;
-if (s[32])
-   num = (((unsigned long) s[ds++])<<24) | (((unsigned long) s[ds++])<<16)
-      | (s[ds++]<<8) | s[ds++];
-else
-   num = s[ds++] | (s[ds++]<<8) | (((unsigned long) s[ds++])<<16)
-      | (((unsigned long) s[ds++])<<24);
+if (s[32]) {
+   num = ((unsigned long) s[ds++])<<24;
+   num |= ((unsigned long) s[ds++])<<16;
+   num |= (s[ds++]<<8);
+   num |= s[ds++];
+   }
+else {
+   num = s[ds++];
+   num |= (s[ds++]<<8);
+   num |= ((unsigned long) s[ds++])<<16;
+   num |= ((unsigned long) s[ds++])<<24;
+   }
 return num;
 }
 
@@ -1032,7 +1042,7 @@ if (argcnt < largc)
 else {
    while (isspace(line[0])) NextCh();
    if (!line[0]) {
-      printf(prompt);
+      fputs(prompt, stdout);
       fgets(line, MAXLINE, stdin);
       }
    while (isspace(line[0])) NextCh();
